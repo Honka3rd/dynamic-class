@@ -1,25 +1,41 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+function Switch(props){
+  return(
+    <div>
+      <button id='btn' className={props.class} onClick={()=>props.onClick('btn')}>
+        {props.text}
+      </button>
+    </div>
+  );
+}
+
 class App extends Component {
+  state={isOk:true}
+
+  onClickHandler=(id)=>
+  {
+    var ok = !this.state.isOk;
+    this.setState({isOk:ok});
+
+    if(this.state.isOk === true)
+    {
+      document.getElementById(id).setAttribute('class','blue');
+      document.getElementById(id).innerHTML='info';
+    }
+    else
+    {
+      document.getElementById(id).setAttribute('class','red');
+      document.getElementById(id).innerHTML='error';
+    }
+    
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Switch isOk={true} class={'red'} text={'error'} onClick={this.onClickHandler} />
       </div>
     );
   }
